@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Index</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <table class="table table-default">
+        <form action="/delete-person" method="post">
+            <tr>
+                <th><input type="submit" class="btn btn-danger" role="button" value="Delete Person"/></th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Height</th>
+                <th>Weight</th>
+
+            </tr>
+
+            <tr th:each="person : ${persons}">
+                <td><input type="checkbox" name="ids" th:value="${person.id}"/></td>
+                <td th:text="${person.name}"></td>
+                <td th:text="${person.age}"></td>
+                <td th:text="${person.height}"></td>
+                <td th:text="${person.weight}"></td>
+
+            </tr>
+        </form>
+    </table>
+    <p>
+        <a th:href="@{/add-person-page}" class="btn btn-success" role="button">Add Person</a>
+    </p>
+</div>
+
+</body>
+</html>
