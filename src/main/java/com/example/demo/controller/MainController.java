@@ -6,11 +6,13 @@ import com.example.demo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -29,7 +31,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/add-person-page", method = RequestMethod.GET)
-            public String addPersonPage(){
+    public String addPersonPage(){
         return "add-person-page";
     }
 
@@ -59,21 +61,15 @@ public class MainController {
         return "update-person-page";
     }
 
-    @RequestMapping(value = "/update-person/{id}", method = RequestMethod.POST)
-    public String updatePerson(@PathVariable long id,
-                            @RequestParam String name,
-                            @RequestParam int age,
-                            @RequestParam int height,
-                            @RequestParam int weight,
-                            Model model){
-        Person person = personService.findPerson(id);
-        person.setName(name);
-        person.setAge(age);
-        person.setHeight(height);
-        person.setWeight(weight);
+    @RequestMapping(value = "/update-person", method = RequestMethod.POST)
+    public String updatePerson(@Valid Person person, Errors errors,
+                        Model model) {
+        if (errors.hasErrors()) {
+            return "/update-person-page";
+        }
+
         personService.updatePerson(person);
-        model.addAttribute("persons", personService.personList());
-        return "index";
+        return "redirect:/";
     }
 
 }

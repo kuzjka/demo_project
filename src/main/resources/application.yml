@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/person?useSSL=false
+    username: root
+    password: my_password
+    driver: com.mysql.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+---
+
+spring:
+  profiles: dev
+  datasource:
+#    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
+    url:  jdbc:h2:d:\tmp\test
+    username: sa
+    password:
+    driver: org.h2.Driver
+    schema: classpath:/person_h2.sql
+    data: classpath:/person_data_h2.sql
+  jpa:
+      hibernate:
+        ddl-auto: ""
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.H2Dialect

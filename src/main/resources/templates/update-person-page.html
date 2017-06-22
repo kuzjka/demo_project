@@ -10,16 +10,25 @@
 </head>
 <body>
 
-<form action="/update-person" method="post">
-    <input type="text" class="form-control" name="name"/>
+<style type="text/css">
+    .error-input {
+        border: 1px red solid;
+    }
+</style>
+
+    <form action="/update-person" method="post" th:object="${person}">
+        <input type="hidden" th:field="*{id}" />
+    <input type="text" class="form-control" th:field="*{name}" />
     <br/>
-    <input type="text" class="form-control" name="age"/>
+    <input type="text" class="form-control" th:field="*{age}" th:errorclass="error-input" />
     <br/>
-    <input type="text" class="form-control" name="height"/>
+    <input type="text" class="form-control" th:field="*{height}" th:errorclass="error-input" />
     <br/>
-    <input type="text" class="form-control" name="weight"/>
+    <input type="text" class="form-control" th:field="*{weight}" th:errorclass="error-input" />
     <br/>
     <input type="submit" class="btn btn-success" role="button"/>
+        <br />
+        <p class="text-danger" th:if="${#fields.hasErrors('*')}">Age, height and weight dhould be numbers</p>
 </form>
 </body>
 </html>
